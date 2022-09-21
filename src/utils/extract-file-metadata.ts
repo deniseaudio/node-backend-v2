@@ -1,12 +1,6 @@
 import { parseFile } from "music-metadata";
 
-export type FileMetadata = {
-  title: string;
-  artist: string;
-  album: string;
-  codec: string;
-  length: number;
-};
+import type { FileMetadata } from "../interfaces/metadata";
 
 export const extractFileMetadata = async (
   filepath: string

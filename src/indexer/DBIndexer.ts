@@ -2,7 +2,7 @@ import path from "node:path";
 import chalk from "chalk";
 import type { WalkStats } from "walk";
 
-import type { FileMetadata } from "./file-metadata";
+import type { FileMetadata } from "../interfaces/metadata";
 import { prismaClient } from "./Prisma";
 
 const LOG_PREFIX = chalk.bgCyan.black(" DBI ");

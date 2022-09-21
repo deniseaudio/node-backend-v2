@@ -7,7 +7,7 @@ import walk, {
 } from "walk";
 
 import type { DBIndexer } from "./DBIndexer";
-import { extractFileMetadata } from "./file-metadata";
+import { extractFileMetadata } from "../utils/extract-file-metadata";
 
 const LOG_PREFIX = chalk.bgGreen.black(" WLK ");
 

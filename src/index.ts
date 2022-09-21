@@ -1,8 +1,8 @@
 import path from "node:path";
 import chalk from "chalk";
 
-import { DBIndexer } from "./DBIndexer";
-import { Walker } from "./Walker";
+import { DBIndexer } from "./indexer/DBIndexer";
+import { Walker } from "./indexer/Walker";
 
 const LOG_PREFIX = chalk.bgMagenta.black(" IDX ");
 const LOG_ERROR_PREFIX = chalk.bgRed.black(" IDX ");
