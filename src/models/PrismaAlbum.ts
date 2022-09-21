@@ -2,7 +2,8 @@ import type { PrismaClient } from "@prisma/client";
 
 export type PrismaAlbumDetails = {
   name: string;
-  artistId: number | null;
+  path: string;
+  artists: { id: number }[];
 };
 
 export class PrismaAlbum {
@@ -12,13 +13,23 @@ export class PrismaAlbum {
     this.client = client;
   }
 
-  public findByArtistIdAndName(artistId: number | null, name: string) {
+  public findByPath(path: string) {
     return this.client.album.findFirst({
-      where: { artistId: { equals: artistId }, name: { equals: name } },
+      where: { path: { equals: path } },
+      include: { artists: true },
     });
   }
 
   public create(data: PrismaAlbumDetails) {
-    return this.client.album.create({ data: { ...data } });
+    return this.client.album.create({
+      data: { ...data, artists: { connect: data.artists } },
+    });
+  }
+
+  public updateArtists(albumId: number, artists: { id: number }[]) {
+    return this.client.album.update({
+      where: { id: albumId },
+      data: { artists: { connect: artists } },
+    });
   }
 }

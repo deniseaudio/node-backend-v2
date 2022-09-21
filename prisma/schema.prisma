@@ -38,8 +38,8 @@ model Artist {
 model Album {
   id       Int     @id @default(autoincrement())
   name     String
-  Artist   Artist @relation(fields: [artistId], references: [id])
-  artistId Int
+  path     String  @unique
+  artists  Artist[]
   songs    Song[]
 }
 
@@ -52,8 +52,7 @@ model Song {
   path        String     @unique
   Directory   Directory? @relation(fields: [directoryId], references: [id])
   directoryId Int?
-  Artist      Artist?    @relation(fields: [artistId], references: [id])
-  artistId    Int?
+  artists     Artist[]
   Album       Album?     @relation(fields: [albumId], references: [id])
   albumId     Int?
 }

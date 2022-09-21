@@ -62,8 +62,12 @@ export class DBIndexer {
 
     if (!exists) {
       const parent = await prismaClient.directory.findByPath(basepath);
-      const artist = await this.getSongArtist(metadata.artist);
-      const album = await this.getAlbumArtist(artist.id, metadata.album);
+      const artist = await this.findOrCreateArtist(metadata.artist);
+      const album = await this.findOrCreateAlbum(
+        basepath,
+        artist.id,
+        metadata.album
+      );
 
       await prismaClient.song.create({
         codec: metadata.codec,
@@ -71,7 +75,7 @@ export class DBIndexer {
         length: metadata.length,
         path: filepath,
         title: metadata.title,
-        artistId: artist ? artist.id : null,
+        artists: artist ? [{ id: artist.id }] : [],
         albumId: album ? album.id : null,
         directoryId: parent ? parent.id : null,
       });
@@ -83,7 +87,7 @@ export class DBIndexer {
     );
   }
 
-  private async getSongArtist(name: string) {
+  private async findOrCreateArtist(name: string) {
     const exists = await prismaClient.artist.findByName(name);
 
     if (!exists) {
@@ -93,14 +97,36 @@ export class DBIndexer {
     return exists;
   }
 
-  private async getAlbumArtist(artistId: number, albumName: string) {
-    const exists = await prismaClient.album.findByArtistIdAndName(
-      artistId,
-      albumName
-    );
+  private async findOrCreateAlbum(
+    folderpath: string,
+    artistId: number,
+    albumName: string
+  ) {
+    const exists = await prismaClient.album.findByPath(folderpath);
 
+    // If no album found, create one.
     if (!exists) {
-      return prismaClient.album.create({ name: albumName, artistId });
+      return prismaClient.album.create({
+        name: albumName,
+        path: folderpath,
+        artists: [{ id: artistId }],
+      });
+    }
+
+    // If album already exists, verify that it contains the song `artistId` so
+    // we can connect this artist to this album.
+    const albumHasArtist =
+      exists.artists.findIndex((artist) => artist.id === artistId) > -1;
+
+    if (!albumHasArtist) {
+      const albumArtistsIds = exists.artists.map((artist) => ({
+        id: artist.id,
+      }));
+
+      return prismaClient.album.updateArtists(exists.id, [
+        ...albumArtistsIds,
+        { id: artistId },
+      ]);
     }
 
     return exists;

@@ -7,7 +7,7 @@ export type PrismaSongDetails = {
   codec: string;
   path: string;
   directoryId: number | null;
-  artistId: number | null;
+  artists: { id: number }[];
   albumId: number | null;
 };
 
@@ -23,6 +23,8 @@ export class PrismaSong {
   }
 
   public create(data: PrismaSongDetails) {
-    return this.client.song.create({ data: { ...data } });
+    return this.client.song.create({
+      data: { ...data, artists: { connect: data.artists } },
+    });
   }
 }

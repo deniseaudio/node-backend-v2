@@ -10,3 +10,4 @@ songs
 
 # Prisma SQLite DB file
 dev.db
+dev.db-journal

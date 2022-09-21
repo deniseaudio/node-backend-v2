@@ -8,6 +8,8 @@
   "scripts": {
     "build": "tsc --build --clean",
     "dev": "ts-node src/index.ts",
+    "prisma:init": "rm -rf prisma/migrations prisma/dev.db prisma/dev.db-journal && prisma migrate dev --name init",
+    "prisma:generate": "prisma generate",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
