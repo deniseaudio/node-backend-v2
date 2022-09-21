@@ -1,0 +1,12 @@
+.DS_Store
+node_modules
+dist
+
+# Local songs used as test files
+songs
+
+# Keep environment variables out of version control
+.env
+
+# Prisma SQLite DB file
+dev.db
