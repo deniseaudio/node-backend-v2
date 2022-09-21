@@ -1,6 +1,7 @@
 import path from "node:path";
 import chalk from "chalk";
 
+import { startServer } from "./api/server";
 import { DBIndexer } from "./indexer/DBIndexer";
 import { Walker } from "./indexer/Walker";
 
@@ -10,6 +11,10 @@ const rootDirectory = path.join(process.cwd(), "songs");
 
 const dbIndexer = new DBIndexer();
 const walker = new Walker({ rootDirectory, dbIndexer, filters: ["@eaDir"] });
+
+(async () => {
+  startServer();
+})();
 
 (async () => {
   try {
