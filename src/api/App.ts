@@ -6,6 +6,7 @@ import hpp from "hpp";
 import cors from "cors";
 import compression from "compression";
 
+import { Routes } from "./interfaces/routes.interfaces";
 import { errorMiddleware } from "./middlewares/error.middleware";
 import { stream as logStream } from "./utils/logger";
 import { NODE_ENV, PORT, ORIGIN, CREDENTIALS } from "./config";
@@ -19,13 +20,13 @@ export class App {
 
   private port: string | number;
 
-  constructor() {
+  constructor(routes: Routes[]) {
     this.app = express();
     this.env = NODE_ENV || "development";
     this.port = PORT || 3000;
 
     this.initializeMiddlewares();
-    this.initializeRoutes();
+    this.initializeRoutes(routes);
     this.initializeErrorHandling();
   }
 
@@ -46,7 +47,9 @@ export class App {
     this.app.use(express.urlencoded({ extended: true }));
   }
 
-  private initializeRoutes() {}
+  private initializeRoutes(routes: Routes[]) {
+    routes.forEach((route) => this.app.use("/", route.router));
+  }
 
   private initializeErrorHandling() {
     this.app.use(errorMiddleware);
