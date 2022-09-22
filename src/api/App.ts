@@ -38,13 +38,23 @@ export class App {
   }
 
   private initializeMiddlewares() {
-    this.app.use(morgan("common", { stream: logStream }));
+    this.app.use(
+      morgan(NODE_ENV === "development" ? "dev" : "combined", {
+        stream: logStream,
+      })
+    );
+
     this.app.use(cors({ origin: ORIGIN, credentials: CREDENTIALS }));
     this.app.use(hpp());
     this.app.use(helmet());
     this.app.use(compression());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+
+    this.app.use((req, res, next) => {
+      res.setHeader("X-Powered-By", "LIGMA");
+      next();
+    });
   }
 
   private initializeRoutes(routes: Routes[]) {
