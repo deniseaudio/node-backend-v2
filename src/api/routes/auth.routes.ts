@@ -2,7 +2,7 @@ import { Router } from "express";
 import { check } from "express-validator";
 
 import { Routes } from "../interfaces/routes.interfaces";
-import { AuthController } from "../controllers/AuthController";
+import { AuthController } from "../controllers/auth.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { validatorMiddleware } from "../middlewares/validator.middleware";
 

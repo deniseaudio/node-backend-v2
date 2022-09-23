@@ -1,8 +1,8 @@
 import { App } from "./App";
 import { validateEnv } from "./utils/validate-env";
 
-import { IndexRoute } from "./routes/IndexRoute";
-import { AuthRoute } from "./routes/AuthRoute";
+import { IndexRoute } from "./routes/index.routes";
+import { AuthRoute } from "./routes/auth.routes";
 
 export const startServer = () => {
   validateEnv();
