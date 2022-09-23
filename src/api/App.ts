@@ -5,6 +5,7 @@ import helmet from "helmet";
 import hpp from "hpp";
 import cors from "cors";
 import compression from "compression";
+import cookieParser from "cookie-parser";
 
 import { Routes } from "./interfaces/routes.interfaces";
 import { errorMiddleware } from "./middlewares/error.middleware";
@@ -50,6 +51,7 @@ export class App {
     this.app.use(compression());
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(cookieParser());
 
     this.app.use((req, res, next) => {
       res.setHeader("X-Powered-By", "LIGMA");
