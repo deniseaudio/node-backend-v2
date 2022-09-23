@@ -22,8 +22,12 @@ export class AuthRoute implements Routes {
       `${this.path}signup`,
       [
         check("email").normalizeEmail().isEmail(),
-        check("username").isString().isLength({ min: 3, max: 50 }),
-        check("password").isString().isLength({ min: 8, max: 100 }),
+        check("username")
+          .isString()
+          .trim()
+          .escape()
+          .isLength({ min: 3, max: 50 }),
+        check("password").isString().trim().isLength({ min: 8, max: 100 }),
         check("secretKey").isString(),
       ],
       validatorMiddleware,
