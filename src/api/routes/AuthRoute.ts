@@ -22,8 +22,8 @@ export class AuthRoute implements Routes {
       `${this.path}signup`,
       [
         check("email").normalizeEmail().isEmail(),
-        check("username").isString(),
-        check("password").isString(),
+        check("username").isString().isLength({ min: 3, max: 50 }),
+        check("password").isString().isLength({ min: 8, max: 100 }),
         check("secretKey").isString(),
       ],
       validatorMiddleware,
@@ -32,7 +32,10 @@ export class AuthRoute implements Routes {
 
     this.router.post(
       `${this.path}login`,
-      [check("email").normalizeEmail().isEmail(), check("password").isString()],
+      [
+        check("email").normalizeEmail().isEmail(),
+        check("password").isString().isLength({ min: 8, max: 100 }),
+      ],
       validatorMiddleware,
       this.authController.login
     );
