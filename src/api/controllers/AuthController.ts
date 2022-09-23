@@ -9,7 +9,7 @@ import { REGISTER_SECRET_KEY } from "../config";
 export class AuthController {
   private authService = new AuthService();
 
-  public async signup(req: Request, res: Response, next: NextFunction) {
+  public signup = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const payload = req.body as UserData;
 
@@ -23,9 +23,9 @@ export class AuthController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
-  public async login(req: Request, res: Response, next: NextFunction) {
+  public login = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const userdata = req.body as UserData;
       const { cookie, user } = await this.authService.login(userdata);
@@ -35,9 +35,13 @@ export class AuthController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 
-  public async logout(req: RequestWithUser, res: Response, next: NextFunction) {
+  public logout = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
     try {
       const userdata = req.body as UserData;
 
@@ -48,5 +52,5 @@ export class AuthController {
     } catch (error) {
       next(error);
     }
-  }
+  };
 }
