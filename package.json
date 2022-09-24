@@ -1,5 +1,5 @@
 {
-  "name": "sqlite-file-indexer",
+  "name": "deniseaudio-backend",
   "version": "0.0.0",
   "description": "File indexer with SQLite3 local database.",
   "author": "TotomInc <cazade.thomas@gmail.com>",
