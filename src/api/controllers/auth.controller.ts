@@ -43,9 +43,9 @@ export class AuthController {
     next: NextFunction
   ) => {
     try {
-      const userdata = req.body as UserData;
+      const userdata = req.user;
 
-      await this.authService.logout(userdata);
+      await this.authService.logout(userdata.email);
 
       res.setHeader("Set-Cookie", ["Authorization=; Max-Age=0"]);
       res.status(200).json({ message: "logout", data: {} });

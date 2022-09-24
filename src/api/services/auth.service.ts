@@ -53,8 +53,8 @@ export class AuthService {
     return { cookie, user: exists };
   }
 
-  public async logout(userdata: UserData) {
-    const exists = await prismaClient.user.findByEmail(userdata.email);
+  public async logout(email: string) {
+    const exists = await prismaClient.user.findByEmail(email);
 
     if (!exists) {
       throw new HttpException(409, "User doesn't exist");
