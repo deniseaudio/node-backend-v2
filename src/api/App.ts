@@ -38,6 +38,10 @@ export class App {
     });
   }
 
+  public getServer() {
+    return this.app;
+  }
+
   private initializeMiddlewares() {
     this.app.use(
       morgan(NODE_ENV === "development" ? "dev" : "combined", {
