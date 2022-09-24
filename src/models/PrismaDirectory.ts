@@ -18,6 +18,10 @@ export class PrismaDirectory {
     return this.client.directory.findUnique({ where: { path } });
   }
 
+  public findRootDirectories() {
+    return this.client.directory.findMany({ where: { root: true } });
+  }
+
   public create({ name, path, root, parentId }: PrismaDirectoryDetails) {
     return this.client.directory.create({
       data: { name, path, root, parentId },
