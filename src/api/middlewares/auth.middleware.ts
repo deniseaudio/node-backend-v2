@@ -7,7 +7,7 @@ import type {
 } from "../interfaces/auth.interfaces";
 import { SECRET_KEY } from "../../config";
 import { HttpException } from "../exceptions/HttpException";
-import { prismaClient } from "../../indexer/Prisma";
+import { prismaClient } from "../../models/Prisma";
 
 export const authMiddleware = async (
   req: RequestWithUser,

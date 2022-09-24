@@ -1,10 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 
-import { PrismaUser } from "./models/PrismaUser";
-import { PrismaDirectory } from "./models/PrismaDirectory";
-import { PrismaSong } from "./models/PrismaSong";
-import { PrismaAlbum } from "./models/PrismaAlbum";
-import { PrismaArtist } from "./models/PrismaArtist";
+import { PrismaUser } from "./PrismaUser";
+import { PrismaDirectory } from "./PrismaDirectory";
+import { PrismaSong } from "./PrismaSong";
+import { PrismaAlbum } from "./PrismaAlbum";
+import { PrismaArtist } from "./PrismaArtist";
 
 export class Prisma {
   public client: PrismaClient;
