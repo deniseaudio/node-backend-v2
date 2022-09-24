@@ -7,7 +7,7 @@ import { authMiddleware } from "../middlewares/auth.middleware";
 import { validatorMiddleware } from "../middlewares/validator.middleware";
 
 export class AuthRoute implements Routes {
-  public path = "/";
+  public path = "/auth/";
 
   public router = Router();
 
