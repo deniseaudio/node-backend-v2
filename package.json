@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@prisma/client": "^4.3.1",
-    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
     "chalk": "^4.1.2",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
@@ -45,6 +45,7 @@
     "@totominc/eslint-config-react": "^0.8.0",
     "@tsconfig/node16": "^1.0.3",
     "@types/bcrypt": "^5.0.0",
+    "@types/bcryptjs": "^2.4.2",
     "@types/compression": "^1.7.2",
     "@types/cookie-parser": "^1.4.3",
     "@types/cors": "^2.8.12",

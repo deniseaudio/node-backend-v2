@@ -1,5 +1,5 @@
-import { hash, compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
+import { hash, compare } from "bcryptjs";
 
 import type { UserData } from "../interfaces/user.interfaces";
 import type {
