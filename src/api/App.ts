@@ -46,6 +46,7 @@ export class App {
     this.app.use(
       morgan(NODE_ENV === "development" ? "dev" : "combined", {
         stream: logStream,
+        skip: () => process.env.NODE_ENV === "test",
       })
     );
 
