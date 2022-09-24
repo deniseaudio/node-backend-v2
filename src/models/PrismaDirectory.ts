@@ -18,8 +18,18 @@ export class PrismaDirectory {
     return this.client.directory.findUnique({ where: { path } });
   }
 
+  public findById(id: number) {
+    return this.client.directory.findUnique({
+      where: { id },
+      include: { songs: true, children: true },
+    });
+  }
+
   public findRootDirectories() {
-    return this.client.directory.findMany({ where: { root: true } });
+    return this.client.directory.findMany({
+      where: { root: true },
+      include: { children: true },
+    });
   }
 
   public create({ name, path, root, parentId }: PrismaDirectoryDetails) {

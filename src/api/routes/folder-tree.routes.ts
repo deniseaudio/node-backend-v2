@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { query } from "express-validator";
 
 import { Routes } from "../interfaces/routes.interfaces";
 import { FolderTreeController } from "../controllers/folder-tree.controller";
@@ -21,6 +22,14 @@ export class FolderTreeRoute implements Routes {
       // @ts-ignore
       authMiddleware,
       this.folderTreeController.getRootDirectories
+    );
+
+    this.router.get(
+      `${this.path}directory`,
+      [query("id").isInt({ min: 1 })],
+      // @ts-ignore
+      authMiddleware,
+      this.folderTreeController.getDirectory
     );
   }
 }

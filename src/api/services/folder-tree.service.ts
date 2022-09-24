@@ -6,4 +6,10 @@ export class FolderTreeService {
 
     return directories;
   }
+
+  public async getDirectory(id: number) {
+    const directory = await prismaClient.directory.findById(id);
+
+    return directory;
+  }
 }

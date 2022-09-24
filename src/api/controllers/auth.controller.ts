@@ -15,6 +15,7 @@ export class AuthController {
 
       if (payload.secretKey !== REGISTER_SECRET_KEY) {
         res.status(401).json({ action: "signup", error: "Invalid secret-key" });
+        return;
       }
 
       const userdata = await this.authService.signup(payload);
