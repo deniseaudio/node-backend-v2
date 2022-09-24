@@ -4,6 +4,7 @@ import { query } from "express-validator";
 import { Routes } from "../interfaces/routes.interfaces";
 import { SongController } from "../controllers/song.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
+import { queryParserMiddleware } from "../middlewares/query-parser.middleware";
 
 export class SongRoute implements Routes {
   public path = "/songs/";
@@ -22,6 +23,7 @@ export class SongRoute implements Routes {
       [query("id").isInt({ min: 1 })],
       // @ts-ignore
       authMiddleware,
+      queryParserMiddleware,
       this.songController.getSongStream
     );
 
@@ -29,6 +31,7 @@ export class SongRoute implements Routes {
       `${this.path}cover`,
       [query("id").isInt({ min: 1 })], // @ts-ignore
       authMiddleware,
+      queryParserMiddleware,
       this.songController.getSongCover
     );
   }

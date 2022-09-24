@@ -5,6 +5,7 @@ import { IndexRoute } from "./routes/index.routes";
 import { AuthRoute } from "./routes/auth.routes";
 import { FolderTreeRoute } from "./routes/folder-tree.routes";
 import { SongRoute } from "./routes/song.routes";
+import { UserRoute } from "./routes/user.routes";
 
 export const startServer = () => {
   validateEnv();
@@ -14,6 +15,7 @@ export const startServer = () => {
     new AuthRoute(),
     new FolderTreeRoute(),
     new SongRoute(),
+    new UserRoute(),
   ]);
 
   app.listen();

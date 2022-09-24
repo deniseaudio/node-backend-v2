@@ -23,20 +23,13 @@ export class FolderTreeController {
   };
 
   public getDirectory = async (
-    req: RequestWithUser & Request<{}, {}, {}, { id: string }>,
+    req: RequestWithUser & Request<{}, {}, {}, { id: number }>,
     res: Response,
     next: NextFunction
   ) => {
     try {
       const { id } = req.query;
-      const parsedId = Number.parseInt(id, 10);
-
-      if (Number.isNaN(parsedId)) {
-        res.status(400).send({ message: "getDirectory", error: "Invalid id" });
-        return;
-      }
-
-      const directory = await this.folderTreeService.getDirectory(parsedId);
+      const directory = await this.folderTreeService.getDirectory(id);
 
       if (!directory) {
         res

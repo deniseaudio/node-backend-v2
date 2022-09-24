@@ -2,16 +2,16 @@ import { Router } from "express";
 import { query } from "express-validator";
 
 import { Routes } from "../interfaces/routes.interfaces";
-import { FolderTreeController } from "../controllers/folder-tree.controller";
+import { UserController } from "../controllers/user.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { queryParserMiddleware } from "../middlewares/query-parser.middleware";
 
-export class FolderTreeRoute implements Routes {
-  public path = "/folder-tree/";
+export class UserRoute implements Routes {
+  public path = "/user/";
 
   public router = Router();
 
-  public folderTreeController = new FolderTreeController();
+  public userController = new UserController();
 
   constructor() {
     this.initializeRoutes();
@@ -19,19 +19,19 @@ export class FolderTreeRoute implements Routes {
 
   private initializeRoutes() {
     this.router.get(
-      `${this.path}root-directories`,
+      `${this.path}songs-liked`,
       // @ts-ignore
       authMiddleware,
-      this.folderTreeController.getRootDirectories
+      this.userController.getSongsLiked
     );
 
-    this.router.get(
-      `${this.path}directory`,
+    this.router.post(
+      `${this.path}toggle-song-like`,
       [query("id").isInt({ min: 1 })],
       // @ts-ignore
       authMiddleware,
       queryParserMiddleware,
-      this.folderTreeController.getDirectory
+      this.userController.toggleSongLike
     );
   }
 }

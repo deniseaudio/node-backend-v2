@@ -11,20 +11,13 @@ export class SongController {
   private songService = new SongService();
 
   public getSongStream = async (
-    req: RequestWithUser & Request<{}, {}, {}, { id: string }>,
+    req: RequestWithUser & Request<{}, {}, {}, { id: number }>,
     res: Response,
     next: NextFunction
   ) => {
     try {
       const { id } = req.query;
-      const parsedId = Number.parseInt(id, 10);
-
-      if (Number.isNaN(parsedId)) {
-        res.status(400).send({ message: "getSongStream", error: "Invalid id" });
-        return;
-      }
-
-      const song = await this.songService.getSong(parsedId);
+      const song = await this.songService.getSong(id);
 
       if (!song) {
         res
@@ -36,7 +29,7 @@ export class SongController {
       // If the song is referenced in DB but not found in system, delete it
       // from the DB.
       if (!fs.existsSync(song.path)) {
-        await this.songService.deleteSong(parsedId);
+        await this.songService.deleteSong(id);
 
         res.status(404).send({
           message: "getSongStream",
@@ -63,20 +56,13 @@ export class SongController {
   };
 
   public getSongCover = async (
-    req: RequestWithUser & Request<{}, {}, {}, { id: string }>,
+    req: RequestWithUser & Request<{}, {}, {}, { id: number }>,
     res: Response,
     next: NextFunction
   ) => {
     try {
       const { id } = req.query;
-      const parsedId = Number.parseInt(id, 10);
-
-      if (Number.isNaN(parsedId)) {
-        res.status(400).send({ message: "getSongCover", error: "Invalid id" });
-        return;
-      }
-
-      const song = await this.songService.getSong(parsedId);
+      const song = await this.songService.getSong(id);
 
       if (!song) {
         res
@@ -88,7 +74,7 @@ export class SongController {
       // If the song is referenced in DB but not found in system, delete it
       // from the DB.
       if (!fs.existsSync(song.path)) {
-        await this.songService.deleteSong(parsedId);
+        await this.songService.deleteSong(id);
 
         res.status(404).send({
           message: "getSongCover",
