@@ -10,7 +10,7 @@ import cookieParser from "cookie-parser";
 import { Routes } from "./interfaces/routes.interfaces";
 import { errorMiddleware } from "./middlewares/error.middleware";
 import { stream as logStream } from "./utils/logger";
-import { NODE_ENV, PORT, ORIGIN, CREDENTIALS } from "./config";
+import { NODE_ENV, PORT, ORIGIN, CREDENTIALS } from "../config";
 
 const LOG_PREFIX = chalk.bgGrey.black(" API ");
 

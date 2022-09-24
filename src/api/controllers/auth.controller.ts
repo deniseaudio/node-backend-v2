@@ -4,7 +4,7 @@ import type { RequestWithUser } from "../interfaces/auth.interfaces";
 
 import type { UserData } from "../interfaces/user.interfaces";
 import { AuthService } from "../services/auth.service";
-import { REGISTER_SECRET_KEY } from "../config";
+import { REGISTER_SECRET_KEY } from "../../config";
 
 export class AuthController {
   private authService = new AuthService();

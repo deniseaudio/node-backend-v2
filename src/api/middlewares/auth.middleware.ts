@@ -5,7 +5,7 @@ import type {
   DataStoredInToken,
   RequestWithUser,
 } from "../interfaces/auth.interfaces";
-import { SECRET_KEY } from "../config";
+import { SECRET_KEY } from "../../config";
 import { HttpException } from "../exceptions/HttpException";
 import { prismaClient } from "../../indexer/Prisma";
 

@@ -8,7 +8,7 @@ import type {
 } from "../interfaces/auth.interfaces";
 import { HttpException } from "../exceptions/HttpException";
 import { prismaClient } from "../../indexer/Prisma";
-import { SECRET_KEY } from "../config";
+import { SECRET_KEY } from "../../config";
 
 export class AuthService {
   public async signup(userdata: UserData) {

@@ -1,7 +1,7 @@
 import path from "node:path";
 import chalk from "chalk";
 
-import { ENABLE_INDEXER } from "./api/config";
+import { ENABLE_INDEXER } from "./config";
 import { startServer } from "./api/server";
 import { DBIndexer } from "./indexer/DBIndexer";
 import { Walker } from "./indexer/Walker";
