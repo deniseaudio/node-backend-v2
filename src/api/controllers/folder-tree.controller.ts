@@ -31,8 +31,6 @@ export class FolderTreeController {
       const { id } = req.query;
       const parsedId = Number.parseInt(id, 10);
 
-      console.log(req.query);
-
       if (Number.isNaN(parsedId)) {
         res.status(400).send({ message: "getDirectory", error: "Invalid id" });
         return;
