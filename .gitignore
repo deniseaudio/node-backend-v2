@@ -3,6 +3,10 @@
 node_modules
 dist
 
+# Environment variables files
+.env.development.local
+.env.production.local
+
 # Local songs used as test files
 songs
 
