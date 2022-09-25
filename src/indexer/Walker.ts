@@ -42,9 +42,13 @@ export class Walker {
     dir: WalkStats,
     next: WalkNext
   ): Promise<void> {
-    await this.dbIndexer.handleDirectory(dir, base);
-
-    next();
+    // Don't register directories if their name contains a key in the `filters` array.
+    if (this.filters.some((filter) => filter.includes(dir.name))) {
+      next();
+    } else {
+      await this.dbIndexer.handleDirectory(dir, base);
+      next();
+    }
   }
 
   private async fileListener(
