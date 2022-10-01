@@ -67,3 +67,7 @@ export const stream = {
     logger.info(message.slice(0, Math.max(0, message.lastIndexOf("\n"))));
   },
 };
+
+if (process.env.NODE_ENV === "test") {
+  logger.silent = true;
+}

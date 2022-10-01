@@ -11,13 +11,13 @@ export const errorMiddleware = (
 ) => {
   try {
     const status = errorException.status || 500;
-    const message = errorException.message || "Something went wrong";
+    const error = errorException.message || "Something went wrong";
 
     logger.error(
-      `[${req.method}] ${req.path} >> StatusCode:: ${status}, Message:: ${message}`
+      `[${req.method}] ${req.path} >> StatusCode:: ${status}, Message:: ${error}`
     );
 
-    res.status(status).json({ message });
+    res.status(status).json({ error });
   } catch (error) {
     next(error);
   }

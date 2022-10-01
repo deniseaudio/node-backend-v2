@@ -7,7 +7,7 @@ import type {
   DataStoredInToken,
 } from "../interfaces/auth.interfaces";
 import { HttpException } from "../exceptions/HttpException";
-import { prismaClient } from "../../models/Prisma";
+import { prismaClient } from "../../models/prisma-client";
 import { SECRET_KEY } from "../../config";
 
 export class AuthService {

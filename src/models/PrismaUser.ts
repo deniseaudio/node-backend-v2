@@ -13,10 +13,6 @@ export class PrismaUser {
     this.client = client;
   }
 
-  public findByEmail(email: string) {
-    return this.client.user.findUnique({ where: { email } });
-  }
-
   public findById(id: number) {
     return this.client.user.findUnique({ where: { id } });
   }
@@ -26,10 +22,6 @@ export class PrismaUser {
       where: { id },
       select: { likes: true },
     });
-  }
-
-  public create({ email, username, password }: PrismaUserDetails) {
-    return this.client.user.create({ data: { email, username, password } });
   }
 
   public createSongLike(userId: number, songId: number) {

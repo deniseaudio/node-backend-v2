@@ -14,14 +14,13 @@ export class AuthController {
       const payload = req.body as UserData;
 
       if (payload.secretKey !== REGISTER_SECRET_KEY) {
-        res.status(401).json({ action: "signup", error: "Invalid secret-key" });
+        res.status(401).json({ error: "Invalid secret-key" });
         return;
       }
 
       const userdata = await this.authService.signup(payload);
 
       res.status(201).json({
-        message: "signup",
         data: {
           id: userdata.id,
           username: userdata.username,
@@ -40,7 +39,6 @@ export class AuthController {
 
       res.setHeader("Set-Cookie", [cookie]);
       res.status(200).json({
-        message: "login",
         data: { id: user.id, username: user.username, email: user.email },
       });
     } catch (error) {
@@ -59,7 +57,7 @@ export class AuthController {
       await this.authService.logout(userdata.email);
 
       res.setHeader("Set-Cookie", ["Authorization=; Max-Age=0"]);
-      res.status(200).json({ message: "logout", data: {} });
+      res.status(200).json({ data: {} });
     } catch (error) {
       next(error);
     }
