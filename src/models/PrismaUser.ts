@@ -13,10 +13,6 @@ export class PrismaUser {
     this.client = client;
   }
 
-  public findById(id: number) {
-    return this.client.user.findUnique({ where: { id } });
-  }
-
   public getSongsLiked(id: number) {
     return this.client.user.findUnique({
       where: { id },

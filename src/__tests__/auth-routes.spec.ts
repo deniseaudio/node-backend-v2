@@ -218,6 +218,9 @@ describe("Index routes testing", () => {
       // Pre-hash password to match it later.
       const hashedPassword = await hash(user.password, 10);
 
+      // Used in the auth middleware to retrieve user.
+      prismaMock.user.findById.mockResolvedValue(user);
+
       prismaMock.user.findByEmail.mockResolvedValue({
         ...user,
         password: hashedPassword,

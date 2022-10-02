@@ -6,6 +6,10 @@ const client = new PrismaClient();
 
 export const prismaClient = {
   user: {
+    findById(id: number) {
+      return client.user.findUnique({ where: { id } });
+    },
+
     findByEmail(email: string) {
       return client.user.findUnique({ where: { email } });
     },
