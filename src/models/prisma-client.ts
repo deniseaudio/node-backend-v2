@@ -34,4 +34,14 @@ export const prismaClient = {
       });
     },
   },
+
+  song: {
+    findById(id: number) {
+      return client.song.findUnique({ where: { id } });
+    },
+
+    delete(id: number) {
+      return client.song.delete({ where: { id } });
+    },
+  },
 };

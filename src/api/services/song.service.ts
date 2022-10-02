@@ -1,4 +1,4 @@
-import { prismaClient } from "../../models/Prisma";
+import { prismaClient } from "../../models/prisma-client";
 
 export class SongService {
   public async getSong(id: number) {
