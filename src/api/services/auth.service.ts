@@ -35,7 +35,7 @@ export class AuthService {
     const exists = await prismaClient.user.findByEmail(userdata.email);
 
     if (!exists) {
-      throw new HttpException(409, "Invalid email or password");
+      throw new HttpException(401, "Invalid email or password");
     }
 
     const isPasswordMatching = await compare(
@@ -44,7 +44,7 @@ export class AuthService {
     );
 
     if (!isPasswordMatching) {
-      throw new HttpException(409, "Invalid email or password");
+      throw new HttpException(401, "Invalid email or password");
     }
 
     const tokenData = this.createToken(exists.id);
