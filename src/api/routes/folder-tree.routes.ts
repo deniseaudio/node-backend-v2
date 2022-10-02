@@ -4,6 +4,7 @@ import { query } from "express-validator";
 import { Routes } from "../interfaces/routes.interfaces";
 import { FolderTreeController } from "../controllers/folder-tree.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
+import { validatorMiddleware } from "../middlewares/validator.middleware";
 import { queryParserMiddleware } from "../middlewares/query-parser.middleware";
 
 export class FolderTreeRoute implements Routes {
@@ -30,6 +31,7 @@ export class FolderTreeRoute implements Routes {
       [query("id").isInt({ min: 1 })],
       // @ts-ignore
       authMiddleware,
+      validatorMiddleware,
       queryParserMiddleware,
       this.folderTreeController.getDirectory
     );

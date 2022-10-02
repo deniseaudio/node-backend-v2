@@ -5,8 +5,6 @@ export const queryParserMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("[query-parser.middleware] id:", req.query.id);
-
   // `id` is a common used query parameter.
   const { id } = req.query;
 

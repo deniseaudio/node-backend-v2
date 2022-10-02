@@ -46,7 +46,6 @@ export class AuthRoute implements Routes {
 
     this.router.post(
       `${this.path}logout`,
-      validatorMiddleware,
       // @ts-ignore
       authMiddleware,
       this.authController.logout
