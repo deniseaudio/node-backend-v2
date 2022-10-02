@@ -23,34 +23,37 @@ export const logger = winston.createLogger({
     }),
     logFormat
   ),
-  transports: [
-    // Debug logs settings
-    new WinstonDaily({
-      level: "debug",
-      datePattern: "YYYY-MM-DD",
-      // Log file /logs/debug/*.log in save
-      dirname: `${logDir}/debug`,
-      filename: `%DATE%.log`,
-      // 30 days saved
-      maxFiles: 30,
-      json: false,
-      zippedArchive: true,
-    }),
+  transports:
+    process.env.NODE_ENV !== "test"
+      ? [
+          // Debug logs settings
+          new WinstonDaily({
+            level: "debug",
+            datePattern: "YYYY-MM-DD",
+            // Log file /logs/debug/*.log in save
+            dirname: `${logDir}/debug`,
+            filename: `%DATE%.log`,
+            // 30 days saved
+            maxFiles: 30,
+            json: false,
+            zippedArchive: true,
+          }),
 
-    // Error logs settings
-    new WinstonDaily({
-      level: "error",
-      datePattern: "YYYY-MM-DD",
-      // Log file /logs/error/*.log in save
-      dirname: `${logDir}/error`,
-      filename: `%DATE%.log`,
-      // 30 days saved
-      maxFiles: 30,
-      handleExceptions: true,
-      json: false,
-      zippedArchive: true,
-    }),
-  ],
+          // Error logs settings
+          new WinstonDaily({
+            level: "error",
+            datePattern: "YYYY-MM-DD",
+            // Log file /logs/error/*.log in save
+            dirname: `${logDir}/error`,
+            filename: `%DATE%.log`,
+            // 30 days saved
+            maxFiles: 30,
+            handleExceptions: true,
+            json: false,
+            zippedArchive: true,
+          }),
+        ]
+      : [],
 });
 
 logger.add(
