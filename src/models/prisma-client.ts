@@ -18,4 +18,20 @@ export const prismaClient = {
       return client.user.create({ data: { email, username, password } });
     },
   },
+
+  directory: {
+    findById(id: number) {
+      return client.directory.findUnique({
+        where: { id },
+        include: { songs: true, children: true },
+      });
+    },
+
+    findRootDirectories() {
+      return client.directory.findMany({
+        where: { root: true },
+        include: { children: true },
+      });
+    },
+  },
 };
