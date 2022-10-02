@@ -38,12 +38,12 @@ export const authMiddleware = async (
 
         next();
       } else {
-        next(new HttpException(401, "Wrong authentication token"));
+        next(new HttpException(401, "Unauthorized"));
       }
     } else {
-      next(new HttpException(404, "Authentication token missing"));
+      next(new HttpException(401, "Unauthorized"));
     }
   } catch {
-    next(new HttpException(401, "Wrong authentication token"));
+    next(new HttpException(401, "Unauthorized"));
   }
 };
