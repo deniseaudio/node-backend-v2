@@ -246,5 +246,44 @@ describe("Index routes testing", () => {
         "Authorization=; Max-Age=0"
       );
     });
+
+    it("should send a 401 when user is not logged", async () => {
+      const routes = new AuthRoute();
+      const app = new App([routes]);
+
+      return request(app.getServer()).post(`${routes.path}logout`).expect(401);
+    });
+
+    it("should send a 401 if the service throw an error", async () => {
+      // First, login user to retrieve auth cookie.
+      // Pre-hash password to match it later.
+      const hashedPassword = await hash(user.password, 10);
+
+      // Used in the auth middleware to retrieve user.
+      prismaMock.user.findById.mockImplementation(() => {
+        throw new Error("Mocked error");
+      });
+
+      prismaMock.user.findByEmail.mockResolvedValue({
+        ...user,
+        password: hashedPassword,
+      });
+
+      const routes = new AuthRoute();
+      const app = new App([routes]);
+
+      const loginResponse = await request(app.getServer())
+        .post(`${routes.path}login`)
+        .send({ email: user.email, password: user.password })
+        .expect(200);
+
+      const authorization = loginResponse.headers["set-cookie"][0];
+
+      // Then, logout user.
+      return request(app.getServer())
+        .post(`${routes.path}logout`)
+        .set("Cookie", authorization)
+        .expect(401);
+    });
   });
 });
