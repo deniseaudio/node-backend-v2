@@ -1,8 +1,36 @@
 import { PrismaClient } from "@prisma/client";
 
-import { PrismaUserDetails } from "./PrismaUser";
-
 const client = new PrismaClient();
+
+type PrismaUserDetails = {
+  email: string;
+  username: string;
+  password: string;
+};
+
+type PrismaDirectoryDetails = {
+  name: string;
+  path: string;
+  root: boolean;
+  parentId: number | null;
+};
+
+type PrismaSongDetails = {
+  title: string;
+  length: number;
+  filename: string;
+  codec: string;
+  path: string;
+  directoryId: number | null;
+  artists: { id: number }[];
+  albumId: number | null;
+};
+
+type PrismaAlbumDetails = {
+  name: string;
+  path: string;
+  artists: { id: number }[];
+};
 
 export const prismaClient = {
   user: {
@@ -50,10 +78,20 @@ export const prismaClient = {
       });
     },
 
+    findByPath(path: string) {
+      return client.directory.findUnique({ where: { path } });
+    },
+
     findRootDirectories() {
       return client.directory.findMany({
         where: { root: true },
         include: { children: true },
+      });
+    },
+
+    create({ name, path, root, parentId }: PrismaDirectoryDetails) {
+      return client.directory.create({
+        data: { name, path, root, parentId },
       });
     },
   },
@@ -63,8 +101,50 @@ export const prismaClient = {
       return client.song.findUnique({ where: { id } });
     },
 
+    findByPath(path: string) {
+      return client.song.findUnique({ where: { path } });
+    },
+
+    create(data: PrismaSongDetails) {
+      return client.song.create({
+        data: { ...data, artists: { connect: data.artists } },
+      });
+    },
+
     delete(id: number) {
       return client.song.delete({ where: { id } });
+    },
+  },
+
+  artist: {
+    findByName(name: string) {
+      return client.artist.findUnique({ where: { name } });
+    },
+
+    create(data: { name: string }) {
+      return client.artist.create({ data: { ...data } });
+    },
+  },
+
+  album: {
+    findByPath(path: string) {
+      return client.album.findFirst({
+        where: { path: { equals: path } },
+        include: { artists: true },
+      });
+    },
+
+    create(data: PrismaAlbumDetails) {
+      return client.album.create({
+        data: { ...data, artists: { connect: data.artists } },
+      });
+    },
+
+    updateArtists(albumId: number, artists: { id: number }[]) {
+      return client.album.update({
+        where: { id: albumId },
+        data: { artists: { connect: artists } },
+      });
     },
   },
 };

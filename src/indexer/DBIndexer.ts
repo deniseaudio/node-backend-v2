@@ -3,7 +3,7 @@ import chalk from "chalk";
 import type { WalkStats } from "walk";
 
 import type { FileMetadata } from "./interfaces/metadata";
-import { prismaClient } from "../models/Prisma";
+import { prismaClient } from "../models/prisma-client";
 
 const LOG_PREFIX = chalk.bgCyan.black(" DBI ");
 
