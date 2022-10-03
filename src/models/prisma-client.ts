@@ -14,8 +14,29 @@ export const prismaClient = {
       return client.user.findUnique({ where: { email } });
     },
 
+    getSongsLiked(id: number) {
+      return client.user.findUnique({
+        where: { id },
+        select: { likes: true },
+      });
+    },
+
     create({ email, username, password }: PrismaUserDetails) {
       return client.user.create({ data: { email, username, password } });
+    },
+
+    createSongLike(userId: number, songId: number) {
+      return client.user.update({
+        where: { id: userId },
+        data: { likes: { connect: { id: songId } } },
+      });
+    },
+
+    deleteSongLike(userId: number, songId: number) {
+      return client.user.update({
+        where: { id: userId },
+        data: { likes: { disconnect: { id: songId } } },
+      });
     },
   },
 
