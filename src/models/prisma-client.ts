@@ -2,6 +2,8 @@ import { PrismaClient } from "@prisma/client";
 
 const client = new PrismaClient();
 
+const MAX_SEARCH_TAKE = 15;
+
 type PrismaUserDetails = {
   email: string;
   username: string;
@@ -144,6 +146,48 @@ export const prismaClient = {
       return client.album.update({
         where: { id: albumId },
         data: { artists: { connect: artists } },
+      });
+    },
+  },
+
+  search: {
+    searchSongs(query: string) {
+      return client.song.findMany({
+        where: {
+          OR: [
+            { title: { contains: query } },
+            { filename: { contains: query } },
+            { artists: { some: { name: { contains: query } } } },
+          ],
+        },
+        take: MAX_SEARCH_TAKE,
+      });
+    },
+
+    searchSongsByFilename(query: string) {
+      return client.song.findMany({
+        where: {
+          OR: [{ filename: { contains: query } }],
+        },
+        take: MAX_SEARCH_TAKE,
+      });
+    },
+
+    searchSongsByAlbum(query: string) {
+      return client.song.findMany({
+        where: {
+          OR: [{ Album: { name: { contains: query } } }],
+        },
+        take: MAX_SEARCH_TAKE,
+      });
+    },
+
+    searchSongsByArtist(query: string) {
+      return client.song.findMany({
+        where: {
+          OR: [{ artists: { some: { name: { contains: query } } } }],
+        },
+        take: MAX_SEARCH_TAKE,
       });
     },
   },
