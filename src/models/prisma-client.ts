@@ -29,6 +29,7 @@ export const prismaClient = {
       return client.user.update({
         where: { id: userId },
         data: { likes: { connect: { id: songId } } },
+        select: { likes: true },
       });
     },
 
@@ -36,6 +37,7 @@ export const prismaClient = {
       return client.user.update({
         where: { id: userId },
         data: { likes: { disconnect: { id: songId } } },
+        select: { likes: true },
       });
     },
   },
