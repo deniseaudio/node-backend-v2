@@ -4,6 +4,7 @@ import { query } from "express-validator";
 import { Routes } from "../interfaces/routes.interfaces";
 import { UserController } from "../controllers/user.controller";
 import { authMiddleware } from "../middlewares/auth.middleware";
+import { validatorMiddleware } from "../middlewares/validator.middleware";
 import { queryParserMiddleware } from "../middlewares/query-parser.middleware";
 
 export class UserRoute implements Routes {
@@ -30,6 +31,7 @@ export class UserRoute implements Routes {
       [query("id").isInt({ min: 1 })],
       // @ts-ignore
       authMiddleware,
+      validatorMiddleware,
       queryParserMiddleware,
       this.userController.toggleSongLike
     );
