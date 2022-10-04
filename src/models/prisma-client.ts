@@ -47,7 +47,7 @@ export const prismaClient = {
     getSongsLiked(id: number) {
       return client.user.findUnique({
         where: { id },
-        select: { likes: true },
+        select: { likes: { include: { artists: true, Album: true } } },
       });
     },
 
@@ -76,7 +76,10 @@ export const prismaClient = {
     findById(id: number) {
       return client.directory.findUnique({
         where: { id },
-        include: { songs: true, children: true },
+        include: {
+          songs: { include: { artists: true, Album: true } },
+          children: true,
+        },
       });
     },
 

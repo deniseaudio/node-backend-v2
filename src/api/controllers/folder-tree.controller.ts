@@ -14,9 +14,10 @@ export class FolderTreeController {
     try {
       const rootDirectories = await this.folderTreeService.getRootDirectories();
 
-      res
-        .status(200)
-        .send({ message: "getRootDirectories", data: rootDirectories });
+      res.status(200).send({
+        message: "getRootDirectories",
+        data: rootDirectories,
+      });
     } catch (error) {
       next(error);
     }
