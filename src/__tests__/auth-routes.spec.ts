@@ -5,6 +5,7 @@ import request from "supertest";
 import { prismaMock } from "../jest-prisma-singleton";
 import { App } from "../api/App";
 import { AuthRoute } from "../api/routes/auth.routes";
+import { autologin } from "../test-utils";
 
 const user: User = {
   id: 1,
@@ -124,7 +125,7 @@ describe("Index routes testing", () => {
         .expect(409);
     });
 
-    it("should send a 500 if the service throw an error", async () => {
+    it("should send a 500 if the controller throw an error", async () => {
       prismaMock.user.findByEmail.mockImplementation(() => {
         throw new Error("Mocked error");
       });
@@ -203,7 +204,7 @@ describe("Index routes testing", () => {
         .expect(401);
     });
 
-    it("should send a 500 if the service throw an error", async () => {
+    it("should send a 500 if the controller throw an error", async () => {
       prismaMock.user.findByEmail.mockImplementation(() => {
         throw new Error("Mocked error");
       });
@@ -290,6 +291,21 @@ describe("Index routes testing", () => {
         .post(`${routes.path}logout`)
         .set("Cookie", authorization)
         .expect(401);
+    });
+
+    it("should send a 500 if the controller throw an error", async () => {
+      const routes = new AuthRoute();
+      const app = new App([routes]);
+      const { authorization } = await autologin(app);
+
+      prismaMock.user.findByEmail.mockImplementation(() => {
+        throw new Error("Mocked error");
+      });
+
+      return request(app.getServer())
+        .post(`${routes.path}logout`)
+        .set("Cookie", authorization)
+        .expect(500);
     });
   });
 });

@@ -50,6 +50,21 @@ describe("Folder-tree routes testing", () => {
         .get("/folder-tree/root-directories")
         .expect(401);
     });
+
+    it("should send a 500 if the controller throws an error", async () => {
+      const app = new App([new AuthRoute(), new FolderTreeRoute()]);
+      const { authorization } = await autologin(app);
+
+      // Mock Prisma error rejection that should be handled inside the controller.
+      prismaMock.directory.findRootDirectories.mockImplementation(() => {
+        throw new Error("Mocked error");
+      });
+
+      return request(app.getServer())
+        .get("/folder-tree/root-directories")
+        .set("Cookie", authorization)
+        .expect(500);
+    });
   });
 
   describe("GET /folder-tree/directory", () => {
@@ -137,6 +152,21 @@ describe("Folder-tree routes testing", () => {
       return request(app.getServer())
         .get("/folder-tree/directory?id=2")
         .expect(401);
+    });
+
+    it("should send a 500 if the controller throws an error", async () => {
+      const app = new App([new AuthRoute(), new FolderTreeRoute()]);
+      const { authorization } = await autologin(app);
+
+      // Mock Prisma error rejection that should be handled inside the controller.
+      prismaMock.directory.findById.mockImplementation(() => {
+        throw new Error("Mocked error");
+      });
+
+      return request(app.getServer())
+        .get("/folder-tree/directory?id=2")
+        .set("Cookie", authorization)
+        .expect(500);
     });
   });
 });

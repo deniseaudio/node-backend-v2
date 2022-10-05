@@ -73,6 +73,21 @@ describe("User routes testing", () => {
 
       return request(app.getServer()).get("/user/songs-liked").expect(401);
     });
+
+    it("should send a 500 if the controller throws an error", async () => {
+      const app = new App([new AuthRoute(), new UserRoute()]);
+      const { authorization } = await autologin(app);
+
+      // Mock Prisma error rejection that should be handled inside the controller.
+      prismaMock.user.getSongsLiked.mockImplementation(() => {
+        throw new Error("Mocked error");
+      });
+
+      return request(app.getServer())
+        .get("/user/songs-liked")
+        .set("Cookie", authorization)
+        .expect(500);
+    });
   });
 
   describe("POST /user/toggle-song-like", () => {
@@ -127,6 +142,21 @@ describe("User routes testing", () => {
       return request(app.getServer())
         .post("/user/toggle-song-like?id=1")
         .expect(401);
+    });
+
+    it("should send a 500 if the controller throws an error", async () => {
+      const app = new App([new AuthRoute(), new UserRoute()]);
+      const { authorization } = await autologin(app);
+
+      // Mock Prisma error rejection that should be handled inside the controller.
+      prismaMock.user.createSongLike.mockImplementation(() => {
+        throw new Error("Mocked error");
+      });
+
+      return request(app.getServer())
+        .post("/user/toggle-song-like?id=1")
+        .set("Cookie", authorization)
+        .expect(500);
     });
   });
 });
