@@ -1,4 +1,14 @@
 /**
+ * Exposed API user payload.
+ */
+export type APIExposedUser = {
+  id: number;
+  username: string;
+  email: string;
+  likes: APIExposedSong[];
+};
+
+/**
  * Exposed API child directory payload.
  */
 export type APIExposedChildDirectory = {

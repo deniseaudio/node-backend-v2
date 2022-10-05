@@ -18,15 +18,9 @@ export class AuthController {
         return;
       }
 
-      const userdata = await this.authService.signup(payload);
+      const user = await this.authService.signup(payload);
 
-      res.status(201).json({
-        data: {
-          id: userdata.id,
-          username: userdata.username,
-          email: userdata.email,
-        },
-      });
+      res.status(201).json({ data: user });
     } catch (error) {
       next(error);
     }
@@ -38,9 +32,7 @@ export class AuthController {
       const { cookie, user } = await this.authService.login(userdata);
 
       res.setHeader("Set-Cookie", [cookie]);
-      res.status(200).json({
-        data: { id: user.id, username: user.username, email: user.email },
-      });
+      res.status(200).json({ data: user });
     } catch (error) {
       next(error);
     }

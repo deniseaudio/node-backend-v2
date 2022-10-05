@@ -14,7 +14,7 @@ export class UserController {
     try {
       const likes = await this.userService.getSongsLiked(req.user.id);
 
-      res.status(200).send({ message: "getSongsLiked", data: likes || [] });
+      res.status(200).send({ message: "getSongsLiked", data: likes });
     } catch (error) {
       next(error);
     }
@@ -29,7 +29,7 @@ export class UserController {
       const { id } = req.query;
       const likes = await this.userService.toggleSongLike(req.user.id, id);
 
-      res.status(200).send({ message: "toggleSongLike", data: likes || [] });
+      res.status(200).send({ message: "toggleSongLike", data: likes });
     } catch (error) {
       next(error);
     }

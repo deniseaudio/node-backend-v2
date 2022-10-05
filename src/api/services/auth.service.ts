@@ -7,6 +7,7 @@ import type {
   DataStoredInToken,
 } from "../interfaces/auth.interfaces";
 import { HttpException } from "../exceptions/HttpException";
+import { mapUser } from "../utils/payload-transform";
 import { prismaClient } from "../../models/prisma-client";
 import { SECRET_KEY } from "../../config";
 
@@ -28,7 +29,9 @@ export class AuthService {
       password: hashedPassword,
     });
 
-    return user;
+    const transformedUser = mapUser(user, []);
+
+    return transformedUser;
   }
 
   public async login(userdata: UserData) {
@@ -37,6 +40,8 @@ export class AuthService {
     if (!exists) {
       throw new HttpException(401, "Invalid email or password");
     }
+
+    const likes = await prismaClient.user.getSongsLiked(exists.id);
 
     const isPasswordMatching = await compare(
       userdata.password,
@@ -49,8 +54,9 @@ export class AuthService {
 
     const tokenData = this.createToken(exists.id);
     const cookie = this.createCookie(tokenData);
+    const transformedUser = mapUser(exists, likes?.likes || []);
 
-    return { cookie, user: exists };
+    return { cookie, user: transformedUser };
   }
 
   public async logout(email: string) {

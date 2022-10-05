@@ -1,6 +1,7 @@
-import type { Directory, Song, Artist, Album } from "@prisma/client";
+import type { Directory, Song, Artist, Album, User } from "@prisma/client";
 
 import {
+  APIExposedUser,
   APIExposedChildDirectory,
   APIExposedSong,
 } from "../interfaces/api-exposed.interfaces";
@@ -45,4 +46,23 @@ export const mapSongs = (
     length: song.length,
     codec: song.codec,
   }));
+};
+
+/**
+ * Universal payload transformer for user-related payloads.
+ *
+ * @param user Prisma User.
+ * @param songs Prisma Song, should match `mapSongs` parameter.
+ * @returns Formatted user.
+ */
+export const mapUser = (
+  user: User,
+  likes: (Song & { artists: Artist[]; Album: Album | null })[]
+): APIExposedUser => {
+  return {
+    id: user.id,
+    email: user.email,
+    username: user.username,
+    likes: mapSongs(likes),
+  };
 };

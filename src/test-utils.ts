@@ -30,6 +30,9 @@ export const autologin = async (app: App) => {
     password: hashedPassword,
   });
 
+  // Used in the auth service to retrieve user likes.
+  prismaMock.user.getSongsLiked.mockResolvedValue({ likes: [] });
+
   // Used in the auth middleware to retrieve user.
   prismaMock.user.findById.mockResolvedValue(user);
 

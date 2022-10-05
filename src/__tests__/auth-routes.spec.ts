@@ -35,6 +35,7 @@ describe("Index routes testing", () => {
       expect(response.body.data.id).toBe(user.id);
       expect(response.body.data.username).toBe(user.username);
       expect(response.body.data.email).toBe(user.email);
+      expect(response.body.data.likes).toMatchObject([]);
       expect(response.body.data.password).not.toBeDefined();
     });
 
@@ -148,10 +149,14 @@ describe("Index routes testing", () => {
       // Pre-hash password to match it later.
       const hashedPassword = await hash(user.password, 10);
 
+      // Used in auth service.
       prismaMock.user.findByEmail.mockResolvedValue({
         ...user,
         password: hashedPassword,
       });
+
+      // Used in auth service, after `findByEmail`.
+      prismaMock.user.getSongsLiked.mockResolvedValue({ likes: [] });
 
       const routes = new AuthRoute();
       const app = new App([routes]);
@@ -166,6 +171,7 @@ describe("Index routes testing", () => {
       expect(response.body.data.id).toBe(user.id);
       expect(response.body.data.username).toBe(user.username);
       expect(response.body.data.email).toBe(user.email);
+      expect(response.body.data.likes).toMatchObject([]);
       expect(response.body.data.password).not.toBeDefined();
       expect(authorization).toBeDefined();
       expect(authorization).toContain("Authorization=");
