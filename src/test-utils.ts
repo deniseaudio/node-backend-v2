@@ -19,6 +19,8 @@ export const autologin = async (app: App) => {
     email: "hello@jest.com",
     username: "jest",
     password: "JestPa$$word123!",
+    lowBandwidthBitrate: 160,
+    lowBandwidthEnabled: true,
   };
 
   // Pre-hash password to match it later.
