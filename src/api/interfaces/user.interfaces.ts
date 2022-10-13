@@ -5,7 +5,12 @@ export type UserData = {
   secretKey: string;
 };
 
-export type User = {
+export type UserOptions = {
+  lowBandwidthEnabled: boolean;
+  lowBandwidthBitrate: number;
+};
+
+export type User = UserOptions & {
   id: number;
   email: string;
   password: string;

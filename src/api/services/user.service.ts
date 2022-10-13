@@ -1,3 +1,4 @@
+import type { UserOptions } from "../interfaces/user.interfaces";
 import { prismaClient } from "../../models/prisma-client";
 import { mapSongs } from "../utils/payload-transform";
 
@@ -21,5 +22,12 @@ export class UserService {
     }
 
     return this.getSongsLiked(userId);
+  }
+
+  public async updateUserOptions(userId: number, options: UserOptions) {
+    return prismaClient.user.updateOptions(userId, {
+      lowBandwidthEnabled: options.lowBandwidthEnabled,
+      lowBandwidthBitrate: options.lowBandwidthBitrate,
+    });
   }
 }

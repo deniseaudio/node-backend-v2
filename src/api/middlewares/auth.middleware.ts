@@ -34,6 +34,8 @@ export const authMiddleware = async (
           id: exists.id,
           email: exists.email,
           password: exists.password,
+          lowBandwidthEnabled: exists.lowBandwidthEnabled,
+          lowBandwidthBitrate: exists.lowBandwidthBitrate,
         };
 
         next();

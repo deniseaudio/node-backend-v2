@@ -1,4 +1,6 @@
 .DS_Store
+# Internal cache stuff
+.cache
 # Internal app logs folder
 .logs
 # PM2 logs folder

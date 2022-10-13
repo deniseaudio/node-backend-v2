@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { query } from "express-validator";
+import { query, body } from "express-validator";
 
 import { Routes } from "../interfaces/routes.interfaces";
 import { UserController } from "../controllers/user.controller";
@@ -34,6 +34,18 @@ export class UserRoute implements Routes {
       validatorMiddleware,
       queryParserMiddleware,
       this.userController.toggleSongLike
+    );
+
+    this.router.post(
+      `${this.path}update-options`,
+      [
+        body("lowBandwidthEnabled").isBoolean(),
+        body("lowBandwidthBitrate").isIn(["128", "160", "192", "256", "320"]),
+      ],
+      // @ts-ignore
+      authMiddleware,
+      validatorMiddleware,
+      this.userController.updateUserOptions
     );
   }
 }

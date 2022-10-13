@@ -1,4 +1,4 @@
-import type { Song } from "@prisma/client";
+import type { User, Song } from "@prisma/client";
 import request from "supertest";
 
 import { prismaMock } from "../jest-prisma-singleton";
@@ -6,6 +6,15 @@ import { autologin } from "../test-utils";
 import { App } from "../api/App";
 import { AuthRoute } from "../api/routes/auth.routes";
 import { UserRoute } from "../api/routes/user.routes";
+
+const user: User = {
+  id: 1,
+  email: "test@jest.com",
+  username: "jest-test",
+  password: "jest-password",
+  lowBandwidthEnabled: true,
+  lowBandwidthBitrate: 128,
+};
 
 const likes: Song[] = [
   {
@@ -157,6 +166,34 @@ describe("User routes testing", () => {
         .post("/user/toggle-song-like?id=1")
         .set("Cookie", authorization)
         .expect(500);
+    });
+  });
+
+  describe("POST /user/update-options", () => {
+    it("should send a 200 when updating user options", async () => {
+      const app = new App([new AuthRoute(), new UserRoute()]);
+      const { authorization } = await autologin(app);
+
+      prismaMock.user.updateOptions.mockResolvedValue(user);
+
+      return request(app.getServer())
+        .post("/user/update-options")
+        .send({ lowBandwidthEnabled: false, lowBandwidthBitrate: 192 })
+        .set("Cookie", authorization)
+        .expect(200);
+    });
+
+    it("should send a 400 when updating user with invalid options", async () => {
+      const app = new App([new AuthRoute(), new UserRoute()]);
+      const { authorization } = await autologin(app);
+
+      prismaMock.user.updateOptions.mockResolvedValue(user);
+
+      return request(app.getServer())
+        .post("/user/update-options")
+        .send({ lowBandwidthEnabled: false, lowBandwidthBitrate: 1 })
+        .set("Cookie", authorization)
+        .expect(400);
     });
   });
 });

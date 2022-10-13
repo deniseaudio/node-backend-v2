@@ -51,6 +51,19 @@ export const prismaClient = {
       });
     },
 
+    updateOptions(
+      id: number,
+      options: { lowBandwidthEnabled: boolean; lowBandwidthBitrate: number }
+    ) {
+      return client.user.update({
+        where: { id },
+        data: {
+          lowBandwidthEnabled: options.lowBandwidthEnabled,
+          lowBandwidthBitrate: options.lowBandwidthBitrate,
+        },
+      });
+    },
+
     create({ email, username, password }: PrismaUserDetails) {
       return client.user.create({ data: { email, username, password } });
     },

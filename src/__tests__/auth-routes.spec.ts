@@ -12,6 +12,8 @@ const user: User = {
   email: "hello@jest.com",
   username: "jest",
   password: "JestPa$$word123!",
+  lowBandwidthEnabled: true,
+  lowBandwidthBitrate: 128,
 };
 
 describe("Index routes testing", () => {

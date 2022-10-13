@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 
 import type { RequestWithUser } from "../interfaces/auth.interfaces";
+import type { UserOptions } from "../interfaces/user.interfaces";
 import { UserService } from "../services/user.service";
 
 export class UserController {
@@ -30,6 +31,25 @@ export class UserController {
       const likes = await this.userService.toggleSongLike(req.user.id, id);
 
       res.status(200).send({ message: "toggleSongLike", data: likes });
+    } catch (error) {
+      next(error);
+    }
+  };
+
+  public updateUserOptions = async (
+    req: RequestWithUser,
+    res: Response,
+    next: NextFunction
+  ) => {
+    try {
+      const body = req.body as UserOptions;
+
+      await this.userService.updateUserOptions(req.user.id, {
+        lowBandwidthBitrate: body.lowBandwidthBitrate,
+        lowBandwidthEnabled: body.lowBandwidthEnabled,
+      });
+
+      res.sendStatus(200);
     } catch (error) {
       next(error);
     }
