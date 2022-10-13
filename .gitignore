@@ -1,5 +1,8 @@
 .DS_Store
+# Internal app logs folder
 .logs
+# PM2 logs folder
+logs
 node_modules
 dist
 coverage
