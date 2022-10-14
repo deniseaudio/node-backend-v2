@@ -36,11 +36,11 @@ The REST-API is entirely tested with Jest inside the folder `src/__tests__`. Cur
 
 1. Install dependencies with npm: `npm install`
 2. Copy the `.env.example` file to `.env.<environment>.local` and fill the variables with your own values.
-  - Valid environments are `development`, `production` and `test`.
+   - Valid environments are `development`, `production` and `test`.
 3. Build the project: `npm run build`
 4. Run the server with pm2: `npx pm2 start ecosystem.config.js`
 5. Save pm2 state: `npx pm2 save`
-  - You may also want to enable pm2 to start on boot: `npx pm2 startup`
+   - You may also want to enable pm2 to start on boot: `npx pm2 startup`
 
 #### Reverse-proxy
 
