@@ -8,7 +8,7 @@ import type {
 } from "../interfaces/auth.interfaces";
 import { HttpException } from "../exceptions/HttpException";
 import { mapUser } from "../utils/payload-transform";
-import { prismaClient } from "../../models/prisma-client";
+import { prismaClient } from "../../prisma-client";
 import { SECRET_KEY } from "../../config";
 
 export class AuthService {

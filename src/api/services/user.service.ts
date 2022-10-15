@@ -1,5 +1,5 @@
 import type { UserOptions } from "../interfaces/user.interfaces";
-import { prismaClient } from "../../models/prisma-client";
+import { prismaClient } from "../../prisma-client";
 import { mapSongs } from "../utils/payload-transform";
 
 export class UserService {

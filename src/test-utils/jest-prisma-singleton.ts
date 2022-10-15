@@ -1,11 +1,11 @@
 /* eslint import/no-extraneous-dependencies: "off" */
 import { mockDeep, mockReset, DeepMockProxy } from "jest-mock-extended";
 
-import { prismaClient } from "../models/prisma-client";
+import { prismaClient } from "../prisma-client";
 
 // Mock deep objects and functions in `prismaClient` object.
 // Those functions will not call anymore `@prisma/client`.
-jest.mock("../models/prisma-client", () => ({
+jest.mock("../prisma-client", () => ({
   __esModule: true,
   prismaClient: mockDeep<typeof prismaClient>(),
 }));

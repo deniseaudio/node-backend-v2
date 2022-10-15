@@ -1,4 +1,4 @@
-import { prismaClient } from "../../models/prisma-client";
+import { prismaClient } from "../../prisma-client";
 import { mapChildrenDirectories, mapSongs } from "../utils/payload-transform";
 
 export class FolderTreeService {

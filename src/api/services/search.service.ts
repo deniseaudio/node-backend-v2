@@ -1,4 +1,4 @@
-import { prismaClient } from "../../models/prisma-client";
+import { prismaClient } from "../../prisma-client";
 
 export class SearchService {
   public async getSearchedSongs(query: string) {
