@@ -1,6 +1,6 @@
 import request from "supertest";
 
-import { prismaMock } from "../jest-prisma-singleton";
+import { prismaMock } from "../test-utils/jest-prisma-singleton";
 import { App } from "../api/App";
 import { AuthRoute } from "../api/routes/auth.routes";
 

@@ -1,8 +1,8 @@
 import type { User, Song } from "@prisma/client";
 import request from "supertest";
 
-import { prismaMock } from "../jest-prisma-singleton";
-import { autologin } from "../test-utils";
+import { prismaMock } from "../test-utils/jest-prisma-singleton";
+import { autologin } from "../test-utils/jest-autologin";
 import { App } from "../api/App";
 import { AuthRoute } from "../api/routes/auth.routes";
 import { UserRoute } from "../api/routes/user.routes";

@@ -4,7 +4,7 @@ import { hash } from "bcryptjs";
 import request from "supertest";
 
 import { prismaMock } from "./jest-prisma-singleton";
-import { App } from "./api/App";
+import { App } from "../api/App";
 
 /**
  * Auto-login a mocked user and returns an Authorization cookie to be used in
