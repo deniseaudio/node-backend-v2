@@ -29,12 +29,15 @@ export class Walker {
 
   private walker: WalkWalker | null;
 
+  public isIndexing: boolean;
+
   constructor(options: WalkerOptions) {
     this.dbIndexer = options.dbIndexer;
     this.rootDirectory = path.normalize(options.rootDirectory);
     this.extensions = options.extensions || [".mp3", ".wav", ".flac", ".m4a"];
     this.filters = options.filters || [];
     this.walker = null;
+    this.isIndexing = false;
   }
 
   private async directoryListener(
@@ -68,6 +71,7 @@ export class Walker {
     console.log(LOG_PREFIX, "Finished traversing directories.");
 
     this.walker = null;
+    this.isIndexing = false;
   }
 
   public walk(): Promise<void> {
@@ -76,6 +80,8 @@ export class Walker {
     }
 
     console.log(LOG_PREFIX, "Starting walker directory traverser.");
+
+    this.isIndexing = true;
 
     this.walker = walk.walk(this.rootDirectory, {
       followLinks: false,

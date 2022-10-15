@@ -8,14 +8,20 @@ import { prismaClient } from "../models/prisma-client";
 const LOG_PREFIX = chalk.bgCyan.black(" DBI ");
 
 export class DBIndexer {
-  public async registerRootDirectory(basepath: string): Promise<void> {
-    const exists = await prismaClient.directory.findByPath(basepath);
-    const dirname = path.basename(basepath);
+  private rootDirectory: string;
+
+  constructor(rootDirectory: string) {
+    this.rootDirectory = rootDirectory;
+  }
+
+  public async registerRootDirectory(): Promise<void> {
+    const exists = await prismaClient.directory.findByPath(this.rootDirectory);
+    const dirname = path.basename(this.rootDirectory);
 
     if (!exists) {
       await prismaClient.directory.create({
         name: dirname,
-        path: basepath,
+        path: this.rootDirectory,
         root: true,
         parentId: null,
       });
