@@ -6,6 +6,8 @@ export type APIExposedUser = {
   username: string;
   email: string;
   likes: APIExposedSong[];
+  lowBandwidthEnabled: boolean;
+  lowBandwidthBitrate: number;
 };
 
 /**

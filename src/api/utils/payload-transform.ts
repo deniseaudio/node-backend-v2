@@ -64,5 +64,7 @@ export const mapUser = (
     email: user.email,
     username: user.username,
     likes: mapSongs(likes),
+    lowBandwidthEnabled: user.lowBandwidthEnabled,
+    lowBandwidthBitrate: user.lowBandwidthBitrate,
   };
 };

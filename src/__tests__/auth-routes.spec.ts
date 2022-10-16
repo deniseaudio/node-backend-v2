@@ -40,6 +40,12 @@ describe("Index routes testing", () => {
       expect(response.body.data.email).toBe(user.email);
       expect(response.body.data.likes).toMatchObject([]);
       expect(response.body.data.password).not.toBeDefined();
+      expect(response.body.data.lowBandwidthEnabled).toBe(
+        user.lowBandwidthEnabled
+      );
+      expect(response.body.data.lowBandwidthBitrate).toBe(
+        user.lowBandwidthBitrate
+      );
     });
 
     it("should send a 400 when passing an invalid email", async () => {
@@ -176,6 +182,8 @@ describe("Index routes testing", () => {
       expect(response.body.data.email).toBe(user.email);
       expect(response.body.data.likes).toMatchObject([]);
       expect(response.body.data.password).not.toBeDefined();
+      expect(response.body.data.lowBandwidthEnabled).toBeDefined();
+      expect(response.body.data.lowBandwidthBitrate).toBeDefined();
       expect(authorization).toBeDefined();
       expect(authorization).toContain("Authorization=");
       expect(authorization).toContain("HttpOnly;");
