@@ -1,6 +1,6 @@
 import chalk from "chalk";
 
-import { ENABLE_INDEXER } from "./config";
+import { ENABLE_INDEXER_ON_BOOT } from "./config";
 import { startServer } from "./api/server";
 import { dbIndexer, walker } from "./indexer/indexer";
 
@@ -12,7 +12,7 @@ const LOG_ERROR_PREFIX = chalk.bgRed.black(" IDX ");
 })();
 
 (async () => {
-  if (ENABLE_INDEXER) {
+  if (ENABLE_INDEXER_ON_BOOT) {
     try {
       console.log(LOG_PREFIX, "Starting indexing...");
       await dbIndexer.registerRootDirectory();

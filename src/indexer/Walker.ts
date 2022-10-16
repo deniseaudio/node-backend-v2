@@ -75,9 +75,7 @@ export class Walker {
   }
 
   public walk(): Promise<void> {
-    if (this.walker) {
-      this.walker.pause();
-    }
+    this.stop();
 
     console.log(LOG_PREFIX, "Starting walker directory traverser.");
 
@@ -100,5 +98,18 @@ export class Walker {
         reject(new Error("No Walker instance, internal error."));
       }
     });
+  }
+
+  public stop() {
+    if (this.walker) {
+      this.walker.pause();
+      this.walker = null;
+      this.isIndexing = false;
+
+      console.log(
+        LOG_PREFIX,
+        "Walker stopped. There may be pending requests to the database."
+      );
+    }
   }
 }
